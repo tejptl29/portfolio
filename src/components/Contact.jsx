@@ -11,28 +11,28 @@ const contactInfo = [
   {
     icon: MdEmail,
     label: "Email",
-    value: "tejash@gmail.com",
+    value: "tejaspatel2845@gmail.com",
     href: "mailto:tejash@gmail.com",
     color: "#3b82f6",
   },
   {
     icon: MdPhone,
     label: "Phone",
-    value: "+91 98765 43210",
+    value: "+91 7698865205",
     href: "tel:+919876543210",
     color: "#8b5cf6",
   },
   {
     icon: MdWhatsapp,
     label: "WhatsApp",
-    value: "+91 98765 43210",
+    value: "+91 7698865205",
     href: "https://wa.me/919876543210",
     color: "#25D366",
   },
   {
     icon: MdLocationOn,
     label: "Location",
-    value: "Ahmedabad, India",
+    value: "12 Green wood Home olpad",
     href: null,
     color: "#ef4444",
   },
@@ -58,16 +58,37 @@ export default function Contact() {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setErrors({});
     setStatus("sending");
-    setTimeout(() => {
-      setStatus("success");
-      setForm(initialForm);
-    }, 1800);
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/tejaspatel2845@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          mobile: form.mobile,
+          requirement: form.requirement,
+          budget: form.budget || "Not specified",
+          _subject: `New Portfolio Inquiry from ${form.name}`,
+          _captcha: "false",
+        }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setForm(initialForm);
+      } else {
+        setStatus("error");
+      }
+    }
+    catch {
+      setStatus("error");
+    }
   };
 
   const handleChange = (field, val) => {
@@ -76,10 +97,9 @@ export default function Contact() {
   };
 
   const inputClass = (field) =>
-    `w-full px-4 py-3 rounded-xl text-sm font-body bg-gray-50 dark:bg-dark-700 border transition-all outline-none focus:ring-2 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 ${
-      errors[field]
-        ? "border-red-400 focus:ring-red-400/20"
-        : "border-gray-200 dark:border-white/10 focus:border-primary-500 focus:ring-primary-500/20"
+    `w-full px-4 py-3 rounded-xl text-sm font-body bg-gray-50 dark:bg-dark-700 border transition-all outline-none focus:ring-2 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 ${errors[field]
+      ? "border-red-400 focus:ring-red-400/20"
+      : "border-gray-200 dark:border-white/10 focus:border-primary-500 focus:ring-primary-500/20"
     }`;
 
   return (
@@ -247,11 +267,10 @@ export default function Contact() {
                       key={b}
                       type="button"
                       onClick={() => handleChange("budget", b)}
-                      className={`px-3.5 py-2 rounded-xl text-xs font-mono border transition-all ${
-                        form.budget === b
-                          ? "bg-primary-500/20 border-primary-500/60 text-primary-400"
-                          : "bg-gray-50 dark:bg-dark-700 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-primary-400/40"
-                      }`}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-mono border transition-all ${form.budget === b
+                        ? "bg-primary-500/20 border-primary-500/60 text-primary-400"
+                        : "bg-gray-50 dark:bg-dark-700 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-primary-400/40"
+                        }`}
                     >
                       {b}
                     </button>
@@ -265,6 +284,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.98 }}
                 disabled={status === "sending" || status === "success"}
                 className="w-full py-4 gradient-bg text-white rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg shadow-primary-500/25 disabled:opacity-70"
+                onClick={() => status === "error" && setStatus(null)}
               >
                 {status === "sending" ? (
                   <>
@@ -291,6 +311,15 @@ export default function Contact() {
                   className="text-center text-sm text-neon font-medium"
                 >
                   ✓ Thanks! I'll get back to you within 24 hours.
+                </motion.p>
+              )}
+              {status === "error" && (
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center text-sm text-red-400 font-medium flex items-center justify-center gap-1"
+                >
+                  <MdError size={15} /> Failed to send. Please try again or email directly.
                 </motion.p>
               )}
             </form>

@@ -91,7 +91,7 @@ export default function Hero() {
             </motion.p>
 
             {/* Stats */}
-            <motion.div variants={fadeUp} className="flex gap-8">
+            {/* <motion.div variants={fadeUp} className="flex gap-8">
               {[
                 { num: "5+", label: "Years Exp." },
                 { num: "30+", label: "Apps Built" },
@@ -102,7 +102,7 @@ export default function Hero() {
                   <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
                 </div>
               ))}
-            </motion.div>
+            </motion.div> */}
 
             {/* CTAs */}
             <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
