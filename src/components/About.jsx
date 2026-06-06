@@ -1,14 +1,13 @@
 import { motion } from "framer-motion";
 import SectionHeader from "./SectionHeader";
 import { techBadges } from "../data";
-import { SiFlutter, SiDart, SiFirebase, SiGit } from "react-icons/si";
 import { MdCheckCircle } from "react-icons/md";
 
 const highlights = [
-  "5+ years building production Flutter apps",
-  "30+ apps deployed on Play Store & App Store",
-  "Expert in Clean Architecture & State Management",
-  "Available for full-time and freelance projects",
+  "Flutter Developer at Tenacious Techies (Current)",
+  "Built production apps: Customer App & FoodChow POS",
+  "Experienced with Hive offline storage & REST APIs",
+  "Available for freelance projects",
 ];
 
 const badgeColors = [
@@ -31,9 +30,9 @@ export default function About() {
       <div className="container-max">
         <SectionHeader
           tag="About Me"
-          title="Crafting Mobile"
-          highlight="Experiences"
-          subtitle="Passionate Flutter developer turning complex ideas into elegant, high-performance mobile applications."
+          title="Building Flutter Apps"
+          highlight="For Real Business"
+          subtitle="Mobile Application Developer focused on creating reliable, user-friendly Flutter apps for real-world business use."
         />
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -47,13 +46,13 @@ export default function About() {
           >
             <div className="glass-card p-8 space-y-5">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Hi! I'm <span className="text-primary-500 font-semibold">Tejash Patel</span>, a Flutter Developer with 5+ years of experience building beautiful, performant, and scalable mobile applications for Android and iOS.
+                Hi! I'm <span className="text-primary-500 font-semibold">Tejash Patel</span>, a Flutter Developer based in Surat, India. I'm currently working at <span className="text-accent-500 font-semibold">Tenacious Techies</span>, building production mobile applications.
               </p>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                I specialize in clean architecture, state management (Bloc, Riverpod, GetX), Firebase integration, and delivering pixel-perfect UI from Figma designs. I've worked with startups and enterprises to ship apps that users love.
+                I've worked on customer apps, POS systems, and food ordering platforms, gaining hands-on experience with Flutter, Dart, Hive for offline storage, and REST API integration using Provider for state management.
               </p>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                When I'm not coding, I contribute to open-source Flutter packages and write technical articles to give back to the developer community.
+                I hold a BCA degree and am currently pursuing MSC-CA. I have a strong drive to improve performance, UI quality, and code structure in everything I build.
               </p>
             </div>
 
@@ -83,24 +82,24 @@ export default function About() {
             transition={{ duration: 0.7 }}
             className="space-y-6"
           >
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Quick info */}
+            <div className="glass-card p-6 space-y-0 divide-y divide-gray-200/50 dark:divide-white/5">
+              <h3 className="font-heading font-semibold text-gray-800 dark:text-gray-200 mb-4 text-sm uppercase tracking-widest">
+                Quick Info
+              </h3>
               {[
-                { num: "5+", label: "Years Experience", color: "from-primary-500 to-primary-600" },
-                { num: "30+", label: "Apps Deployed", color: "from-accent-500 to-accent-600" },
-                { num: "20+", label: "Happy Clients", color: "from-teal-500 to-teal-600" },
-                { num: "100%", label: "Client Satisfaction", color: "from-yellow-500 to-orange-500" },
-              ].map(({ num, label, color }) => (
-                <motion.div
-                  key={label}
-                  whileHover={{ scale: 1.03 }}
-                  className="glass-card p-6 text-center"
-                >
-                  <p className={`font-heading text-3xl font-bold bg-gradient-to-r ${color} bg-clip-text text-transparent`}>
-                    {num}
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{label}</p>
-                </motion.div>
+                { label: "Location", value: "Olpad, Surat, Gujarat" },
+                { label: "Company", value: "Tenacious Techies" },
+                { label: "Role", value: "Software Developer (Flutter)" },
+                { label: "Degree", value: "BCA · MSC-CA (CGPA 9.28)" },
+                { label: "Languages", value: "English · Hindi · Gujarati" },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex gap-4 py-3">
+                  <span className="font-mono text-xs text-gray-400 dark:text-gray-500 w-24 flex-shrink-0 pt-0.5 uppercase tracking-wider">
+                    {label}
+                  </span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300">{value}</span>
+                </div>
               ))}
             </div>
 

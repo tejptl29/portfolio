@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import {
-  MdArchitecture, MdCode, MdRocketLaunch, MdChat, MdStorefront, MdSupportAgent,
+  MdArchitecture, MdCode, MdRocketLaunch, MdChat, MdStorefront, MdSupportAgent, MdBugReport,
 } from "react-icons/md";
 import SectionHeader from "./SectionHeader";
 import { whyHireMe } from "../data";
 
-const iconMap = { MdArchitecture, MdCode, MdRocketLaunch, MdChat, MdStorefront, MdSupportAgent };
+const iconMap = { MdArchitecture, MdCode, MdRocketLaunch, MdChat, MdStorefront, MdSupportAgent, MdBugReport };
 
 export default function WhyHireMe() {
   return (
@@ -14,9 +14,9 @@ export default function WhyHireMe() {
       <div className="container-max">
         <SectionHeader
           tag="Why Choose Me"
-          title="Reasons to"
-          highlight="Hire Me"
-          subtitle="What sets me apart from other Flutter developers in the market."
+          title="What I"
+          highlight="Bring to the Table"
+          subtitle="Skills, habits, and values I've developed through real production app work."
         />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

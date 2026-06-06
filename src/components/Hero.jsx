@@ -83,11 +83,11 @@ export default function Hero() {
               variants={fadeUp}
               className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-xl"
             >
-              I build{" "}
-              <span className="text-primary-500 font-semibold">high-performance</span>{" "}
-              Android and iOS applications using Flutter. Helping businesses and
-              startups transform ideas into{" "}
-              <span className="text-accent-500 font-semibold">scalable mobile applications</span>.
+              Mobile Application Developer focused on creating{" "}
+              <span className="text-primary-500 font-semibold">reliable, user-friendly</span>{" "}
+              Flutter apps for real-world business use — customer apps,
+              POS systems, and food ordering platforms with{" "}
+              <span className="text-accent-500 font-semibold">REST API & offline support</span>.
             </motion.p>
 
             {/* Stats */}
@@ -131,8 +131,8 @@ export default function Hero() {
             <motion.div variants={fadeUp} className="flex items-center gap-4">
               <span className="text-sm text-gray-500 dark:text-gray-400">Follow me:</span>
               {[
-                { Icon: FaGithub, href: "https://github.com/tejashpatel", label: "GitHub" },
-                { Icon: FaLinkedin, href: "https://linkedin.com/in/tejashpatel", label: "LinkedIn" },
+                { Icon: FaGithub, href: "https://github.com/tejptl29", label: "GitHub" },
+                { Icon: FaLinkedin, href: "https://linkedin.com/in/tejash-patel", label: "LinkedIn" },
               ].map(({ Icon, href, label }) => (
                 <motion.a
                   key={label}

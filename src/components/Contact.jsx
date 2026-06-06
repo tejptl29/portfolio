@@ -11,28 +11,28 @@ const contactInfo = [
   {
     icon: MdEmail,
     label: "Email",
-    value: "tejaspatel2845@gmail.com",
-    href: "mailto:tejash@gmail.com",
+    value: "tejashpatel2903@gmail.com",
+    href: "mailto:tejashpatel2903@gmail.com",
     color: "#3b82f6",
   },
   {
     icon: MdPhone,
     label: "Phone",
     value: "+91 7698865205",
-    href: "tel:+919876543210",
+    href: "tel:+917698865205",
     color: "#8b5cf6",
   },
   {
     icon: MdWhatsapp,
     label: "WhatsApp",
     value: "+91 7698865205",
-    href: "https://wa.me/919876543210",
+    href: "https://wa.me/917698865205",
     color: "#25D366",
   },
   {
     icon: MdLocationOn,
     label: "Location",
-    value: "12 Green wood Home olpad",
+    value: "12 Green Wood Home, Olpad, Surat",
     href: null,
     color: "#ef4444",
   },
@@ -66,7 +66,7 @@ export default function Contact() {
     setStatus("sending");
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/tejaspatel2845@gmail.com", {
+      const res = await fetch("https://formsubmit.co/ajax/tejashpatel2903@gmail.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
@@ -156,9 +156,9 @@ export default function Contact() {
               <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">Social</p>
               <div className="flex gap-3">
                 {[
-                  { Icon: FaGithub, href: "https://github.com/tejashpatel", label: "GitHub" },
-                  { Icon: FaLinkedin, href: "https://linkedin.com/in/tejashpatel", label: "LinkedIn" },
-                  { Icon: MdWhatsapp, href: "https://wa.me/919876543210", label: "WhatsApp" },
+                  { Icon: FaGithub, href: "https://github.com/tejptl29", label: "GitHub" },
+                  { Icon: FaLinkedin, href: "https://linkedin.com/in/tejash-patel", label: "LinkedIn" },
+                  { Icon: MdWhatsapp, href: "https://wa.me/917698865205", label: "WhatsApp" },
                 ].map(({ Icon, href, label }) => (
                   <motion.a
                     key={label}

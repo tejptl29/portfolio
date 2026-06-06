@@ -10,7 +10,7 @@ import Services from "./components/Services";
 import Projects from "./components/Projects";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
-import Testimonials from "./components/Testimonials";
+import Education from "./components/Education";
 import WhyHireMe from "./components/WhyHireMe";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -40,7 +40,7 @@ export default function App() {
             <Projects />
             <Experience />
             <Skills />
-            <Testimonials />
+            <Education />
             <WhyHireMe />
             <Contact />
           </main>

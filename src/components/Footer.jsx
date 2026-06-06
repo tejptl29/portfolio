@@ -4,10 +4,10 @@ import { MdEmail, MdWhatsapp, MdFavorite, MdArrowUpward } from "react-icons/md";
 import { navLinks } from "../data";
 
 const socials = [
-  { Icon: FaGithub, href: "https://github.com/tejashpatel", label: "GitHub" },
-  { Icon: FaLinkedin, href: "https://linkedin.com/in/tejashpatel", label: "LinkedIn" },
-  { Icon: MdEmail, href: "mailto:tejash@gmail.com", label: "Email" },
-  { Icon: MdWhatsapp, href: "https://wa.me/919876543210", label: "WhatsApp" },
+  { Icon: FaGithub, href: "https://github.com/tejptl29", label: "GitHub" },
+  { Icon: FaLinkedin, href: "https://linkedin.com/in/tejash-patel", label: "LinkedIn" },
+  { Icon: MdEmail, href: "mailto:tejashpatel2903@gmail.com", label: "Email" },
+  { Icon: MdWhatsapp, href: "https://wa.me/917698865205", label: "WhatsApp" },
 ];
 
 export default function Footer() {
