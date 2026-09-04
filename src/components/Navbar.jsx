@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
-import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { navLinks } from "../data";
 import { useScrollSpy } from "../hooks/useScrollSpy";
 
 const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
 
-export default function Navbar({ theme, toggleTheme }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const activeSection = useScrollSpy(sectionIds);
+  const activeSection = useScrollSpy(sectionIds, 140);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -24,120 +22,100 @@ export default function Navbar({ theme, toggleTheme }) {
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "glass shadow-lg shadow-primary-500/5 py-3"
-          : "bg-transparent py-5"
+          ? "bg-[#0b0c14]/90 backdrop-blur-md border-b border-white/[0.08] py-3 shadow-lg shadow-black/30"
+          : "bg-transparent py-4.5"
       }`}
     >
-      <div className="container-max px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo */}
-        <motion.a
+      <div className="container-max px-5 sm:px-8 flex items-center justify-between">
+        {/* Brand */}
+        <a
           href="#home"
-          onClick={(e) => { e.preventDefault(); handleNav("#home"); }}
-          whileHover={{ scale: 1.05 }}
-          className="font-heading font-bold text-xl"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNav("#home");
+          }}
+          className="font-semibold text-base text-white hover:text-sky-300 transition-colors flex items-center gap-2.5 group"
         >
-          <span className="gradient-text">Tejash</span>
-          <span className="text-gray-900 dark:text-white">.</span>
-        </motion.a>
+          <img
+            src="/profile.jpg"
+            alt="Tejash Patel"
+            className="w-7 h-7 rounded-full object-cover object-top border border-sky-400/80 group-hover:scale-110 transition-transform"
+          />
+          <span>Tejash Patel</span>
+        </a>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1">
+        {/* Desktop Nav Links inside an Elegant Segmented Container */}
+        <div className="hidden md:flex items-center gap-1 p-1.5 rounded-2xl bg-[#11121d]/90 backdrop-blur-md border border-white/[0.08] shadow-lg shadow-black/40">
           {navLinks.map((link) => {
             const id = link.href.replace("#", "");
             const isActive = activeSection === id;
             return (
-              <motion.button
+              <button
                 key={link.href}
                 onClick={() => handleNav(link.href)}
-                whileHover={{ y: -2 }}
-                className={`relative px-4 py-2 rounded-lg font-body text-sm font-medium transition-colors duration-200 ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap cursor-pointer transition-all duration-200 ${
                   isActive
-                    ? "text-primary-500 dark:text-primary-400"
-                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                    ? "bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm shadow-sky-500/10 font-semibold"
+                    : "text-gray-400 hover:text-white hover:bg-white/[0.05] border border-transparent"
                 }`}
               >
                 {link.label}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute inset-0 bg-primary-500/10 dark:bg-primary-500/15 rounded-lg"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
-                  />
-                )}
-              </motion.button>
+              </button>
             );
           })}
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-3">
-          <motion.button
-            whileHover={{ scale: 1.1, rotate: 15 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleTheme}
-            className="p-2.5 rounded-xl glass text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
-          >
-            {theme === "dark" ? <MdLightMode size={18} /> : <MdDarkMode size={18} />}
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleNav("#contact")}
-            className="hidden md:block px-5 py-2 gradient-bg text-white rounded-xl text-sm font-semibold shadow-lg shadow-primary-500/25"
-          >
-            Hire Me
-          </motion.button>
-
+        {/* CTA Button */}
+        <div className="hidden md:block">
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2.5 rounded-xl glass text-gray-700 dark:text-gray-300"
+            onClick={() => handleNav("#contact")}
+            className="px-4 py-2 rounded-xl btn-gradient text-xs sm:text-sm font-semibold cursor-pointer"
           >
-            {mobileOpen ? <HiX size={20} /> : <HiMenu size={20} />}
+            Let's Talk
           </button>
         </div>
+
+        {/* Mobile menu trigger */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden p-2 text-neutral-400 hover:text-white"
+          aria-label="Toggle navigation"
+        >
+          {mobileOpen ? <HiX size={20} /> : <HiMenu size={20} />}
+        </button>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden glass border-t border-white/10 mt-2 overflow-hidden"
-          >
-            <div className="px-4 py-4 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => handleNav(link.href)}
-                  className={`text-left px-4 py-3 rounded-xl font-body font-medium transition-colors ${
-                    activeSection === link.href.replace("#", "")
-                      ? "text-primary-500 bg-primary-500/10"
-                      : "text-gray-700 dark:text-gray-300 hover:text-primary-500 hover:bg-primary-500/5"
-                  }`}
-                >
-                  {link.label}
-                </button>
-              ))}
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="md:hidden bg-[#0e0f19] border-b border-white/[0.08] px-5 py-4 space-y-2">
+          {navLinks.map((link) => {
+            const id = link.href.replace("#", "");
+            const isActive = activeSection === id;
+            return (
               <button
-                onClick={() => handleNav("#contact")}
-                className="mt-2 px-4 py-3 gradient-bg text-white rounded-xl font-semibold"
+                key={link.href}
+                onClick={() => handleNav(link.href)}
+                className={`block w-full text-left px-3.5 py-2.5 rounded-xl text-sm transition-all ${
+                  isActive
+                    ? "bg-sky-500/20 text-sky-300 border border-sky-500/35 font-semibold"
+                    : "text-gray-300 hover:text-white hover:bg-white/[0.04]"
+                }`}
               >
-                Hire Me
+                {link.label}
               </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            );
+          })}
+          <button
+            onClick={() => handleNav("#contact")}
+            className="w-full py-2.5 rounded-xl btn-gradient font-medium text-sm text-center mt-2"
+          >
+            Get In Touch
+          </button>
+        </div>
+      )}
+    </nav>
   );
 }

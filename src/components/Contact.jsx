@@ -1,327 +1,228 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  MdEmail, MdPhone, MdSend, MdCheckCircle, MdError,
-  MdWhatsapp, MdLocationOn,
-} from "react-icons/md";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdEmail, MdPhone, MdCheckCircle, MdError, MdContentCopy, MdSend } from "react-icons/md";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import SectionHeader from "./SectionHeader";
 
-const contactInfo = [
-  {
-    icon: MdEmail,
-    label: "Email",
-    value: "tejashpatel2903@gmail.com",
-    href: "mailto:tejashpatel2903@gmail.com",
-    color: "#3b82f6",
-  },
-  {
-    icon: MdPhone,
-    label: "Phone",
-    value: "+91 7698865205",
-    href: "tel:+917698865205",
-    color: "#8b5cf6",
-  },
-  {
-    icon: MdWhatsapp,
-    label: "WhatsApp",
-    value: "+91 7698865205",
-    href: "https://wa.me/917698865205",
-    color: "#25D366",
-  },
-  {
-    icon: MdLocationOn,
-    label: "Location",
-    value: "12 Green Wood Home, Olpad, Surat",
-    href: null,
-    color: "#ef4444",
-  },
-];
-
-const budgets = ["< ₹50K", "₹50K–₹1L", "₹1L–₹3L", "₹3L+", "Let's discuss"];
-
-const initialForm = { name: "", email: "", mobile: "", requirement: "", budget: "" };
-
 export default function Contact() {
-  const [form, setForm] = useState(initialForm);
-  const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState(null); // null | "sending" | "success" | "error"
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle");
+  const [copied, setCopied] = useState(false);
 
-  const validate = () => {
-    const e = {};
-    if (!form.name.trim()) e.name = "Name is required";
-    if (!form.email.trim()) e.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Invalid email";
-    if (!form.mobile.trim()) e.mobile = "Mobile is required";
-    else if (!/^[0-9]{10}$/.test(form.mobile.replace(/\s/g, ""))) e.mobile = "Enter 10-digit number";
-    if (!form.requirement.trim()) e.requirement = "Describe your project";
-    return e;
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("tejashpatel2903@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    setErrors({});
-    setStatus("sending");
+    if (!form.name || !form.email || !form.message) return;
 
+    setStatus("loading");
     try {
       const res = await fetch("https://formsubmit.co/ajax/tejashpatel2903@gmail.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          mobile: form.mobile,
-          requirement: form.requirement,
-          budget: form.budget || "Not specified",
+          Name: form.name,
+          Email: form.email,
+          Message: form.message,
           _subject: `New Portfolio Inquiry from ${form.name}`,
-          _captcha: "false",
         }),
       });
+
       if (res.ok) {
         setStatus("success");
-        setForm(initialForm);
+        setForm({ name: "", email: "", message: "" });
       } else {
         setStatus("error");
       }
-    }
-    catch {
+    } catch {
       setStatus("error");
     }
   };
 
-  const handleChange = (field, val) => {
-    setForm((f) => ({ ...f, [field]: val }));
-    if (errors[field]) setErrors((e) => { const n = { ...e }; delete n[field]; return n; });
-  };
-
-  const inputClass = (field) =>
-    `w-full px-4 py-3 rounded-xl text-sm font-body bg-gray-50 dark:bg-dark-700 border transition-all outline-none focus:ring-2 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 ${errors[field]
-      ? "border-red-400 focus:ring-red-400/20"
-      : "border-gray-200 dark:border-white/10 focus:border-primary-500 focus:ring-primary-500/20"
-    }`;
-
   return (
-    <section id="contact" className="section-padding relative overflow-hidden">
-      <div className="absolute right-0 top-1/4 w-80 h-80 bg-primary-500/5 rounded-full blur-3xl" />
+    <section id="contact" className="section-padding text-left border-t border-white/[0.06]">
       <div className="container-max">
         <SectionHeader
-          tag="Get In Touch"
-          title="Start Your"
-          highlight="Project"
-          subtitle="Have an idea? Let's turn it into a high-performing mobile app. Reach out and I'll respond within 24 hours."
+          tag="Contact"
+          title="Let's Build"
+          highlight="Together"
+          subtitle="Open to full-time Flutter engineering opportunities, mobile consultations, and production contracts."
         />
 
-        <div className="grid lg:grid-cols-5 gap-10">
-          {/* Contact Info */}
+        <div className="grid md:grid-cols-12 gap-6 items-start">
+          {/* Left direct contact channels (5 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 space-y-5"
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="md:col-span-5 space-y-4"
           >
-            {contactInfo.map(({ icon: Icon, label, value, href, color }) => (
-              <motion.div
-                key={label}
-                whileHover={{ x: 4 }}
-                className="glass-card p-5 flex items-center gap-4"
-              >
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: `${color}18`, border: `1px solid ${color}30` }}
-                >
-                  <Icon size={20} style={{ color }} />
-                </div>
-                <div>
-                  <p className="text-xs font-mono text-gray-400 uppercase tracking-widest">{label}</p>
-                  {href ? (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-primary-500 transition-colors"
-                    >
-                      {value}
-                    </a>
-                  ) : (
-                    <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{value}</p>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-
-            {/* Social */}
-            <div className="glass-card p-5">
-              <p className="text-xs font-mono text-gray-400 uppercase tracking-widest mb-3">Social</p>
-              <div className="flex gap-3">
-                {[
-                  { Icon: FaGithub, href: "https://github.com/tejptl29", label: "GitHub" },
-                  { Icon: FaLinkedin, href: "https://linkedin.com/in/tejash-patel", label: "LinkedIn" },
-                  { Icon: MdWhatsapp, href: "https://wa.me/917698865205", label: "WhatsApp" },
-                ].map(({ Icon, href, label }) => (
-                  <motion.a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.15, y: -3 }}
-                    className="w-11 h-11 glass rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-primary-400 transition-colors"
-                  >
-                    <Icon size={18} />
-                  </motion.a>
-                ))}
+            {/* Status card */}
+            <div className="modern-card p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-400">
+                  Current Status
+                </span>
               </div>
+              <p className="text-sm sm:text-base font-medium text-white leading-snug">
+                Available for full-time Flutter developer roles & mobile projects.
+              </p>
+              <p className="text-xs sm:text-sm text-gray-400">
+                Surat, Gujarat, India · Open to Remote or Hybrid.
+              </p>
+            </div>
+
+            {/* Email card */}
+            <div className="modern-card p-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono text-gray-400 uppercase">Direct Email</span>
+                <button
+                  onClick={handleCopyEmail}
+                  className="flex items-center gap-1.5 text-xs font-mono text-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
+                >
+                  <MdContentCopy size={14} />
+                  <span>{copied ? "Copied!" : "Copy"}</span>
+                </button>
+              </div>
+              <a
+                href="mailto:tejashpatel2903@gmail.com"
+                className="text-base sm:text-lg font-semibold text-white hover:text-sky-400 transition-colors block break-all"
+              >
+                tejashpatel2903@gmail.com
+              </a>
+              <p className="text-xs sm:text-sm text-gray-400">
+                Guaranteed response within 24 hours.
+              </p>
+            </div>
+
+            {/* WhatsApp card */}
+            <div className="modern-card p-5 space-y-3">
+              <span className="text-xs font-mono text-gray-400 uppercase">Phone & WhatsApp</span>
+              <p className="text-base font-semibold text-white">+91 7698865205</p>
+              <a
+                href="https://wa.me/917698865205"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-xs text-emerald-400 border border-emerald-500/20 font-medium transition-colors"
+              >
+                <FaWhatsapp size={15} />
+                <span>Chat Directly on WhatsApp</span>
+              </a>
+            </div>
+
+            {/* Social profiles */}
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href="https://github.com/tejptl29"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="modern-card p-3.5 text-center flex items-center justify-center gap-2 text-xs font-mono text-gray-300 hover:text-white hover:border-sky-500/30 transition-colors"
+              >
+                <FaGithub size={16} />
+                <span>GitHub</span>
+              </a>
+              <a
+                href="https://linkedin.com/in/tejash-patel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="modern-card p-3.5 text-center flex items-center justify-center gap-2 text-xs font-mono text-gray-300 hover:text-white hover:border-sky-500/30 transition-colors"
+              >
+                <FaLinkedin size={16} className="text-sky-400" />
+                <span>LinkedIn</span>
+              </a>
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* Right form (7 cols) with Scroll Animation */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-3"
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="md:col-span-7"
           >
-            <form onSubmit={handleSubmit} className="glass-card p-8 space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
+            <form onSubmit={handleSubmit} className="modern-card p-6 sm:p-8 space-y-5">
+              <div className="space-y-1">
+                <h3 className="text-lg font-bold text-white">
+                  Send a Direct Message
+                </h3>
+                <p className="text-xs text-gray-400">
+                  Fill in the details below and I'll get back to you promptly.
+                </p>
+              </div>
+
+              {status === "success" && (
+                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center gap-3 text-xs text-emerald-300">
+                  <MdCheckCircle size={18} className="text-emerald-400 flex-shrink-0" />
+                  <span>Your message has been sent successfully! I will reply to you shortly.</span>
+                </div>
+              )}
+
+              {status === "error" && (
+                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center gap-3 text-xs text-red-300">
+                  <MdError size={18} className="text-red-400 flex-shrink-0" />
+                  <span>Unable to send right now. Please email directly at tejashpatel2903@gmail.com.</span>
+                </div>
+              )}
+
+              <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-mono text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-widest">
-                    Full Name *
+                  <label className="block text-xs font-mono text-gray-400 uppercase mb-1.5">
+                    Your Name
                   </label>
                   <input
                     type="text"
-                    placeholder="John Doe"
+                    required
                     value={form.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    className={inputClass("name")}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="e.g. John Doe"
+                    className="w-full px-4 py-3 rounded-xl bg-[#181926] border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors"
                   />
-                  {errors.name && (
-                    <p className="text-xs text-red-400 mt-1 flex items-center gap-1">
-                      <MdError size={12} /> {errors.name}
-                    </p>
-                  )}
                 </div>
+
                 <div>
-                  <label className="block text-xs font-mono text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-widest">
-                    Email *
+                  <label className="block text-xs font-mono text-gray-400 uppercase mb-1.5">
+                    Your Email
                   </label>
                   <input
                     type="email"
-                    placeholder="john@company.com"
+                    required
                     value={form.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    className={inputClass("email")}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="e.g. john@company.com"
+                    className="w-full px-4 py-3 rounded-xl bg-[#181926] border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors"
                   />
-                  {errors.email && (
-                    <p className="text-xs text-red-400 mt-1 flex items-center gap-1">
-                      <MdError size={12} /> {errors.email}
-                    </p>
-                  )}
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-xs font-mono text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-widest">
-                  Mobile Number *
-                </label>
-                <input
-                  type="tel"
-                  placeholder="9876543210"
-                  value={form.mobile}
-                  onChange={(e) => handleChange("mobile", e.target.value)}
-                  className={inputClass("mobile")}
-                />
-                {errors.mobile && (
-                  <p className="text-xs text-red-400 mt-1 flex items-center gap-1">
-                    <MdError size={12} /> {errors.mobile}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-widest">
-                  Project Requirement *
-                </label>
-                <textarea
-                  rows={4}
-                  placeholder="Describe your app idea, features, timeline..."
-                  value={form.requirement}
-                  onChange={(e) => handleChange("requirement", e.target.value)}
-                  className={`${inputClass("requirement")} resize-none`}
-                />
-                {errors.requirement && (
-                  <p className="text-xs text-red-400 mt-1 flex items-center gap-1">
-                    <MdError size={12} /> {errors.requirement}
-                  </p>
-                )}
-              </div>
-
-              {/* Budget */}
-              <div>
-                <label className="block text-xs font-mono text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">
-                  Budget Range
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {budgets.map((b) => (
-                    <button
-                      key={b}
-                      type="button"
-                      onClick={() => handleChange("budget", b)}
-                      className={`px-3.5 py-2 rounded-xl text-xs font-mono border transition-all ${form.budget === b
-                        ? "bg-primary-500/20 border-primary-500/60 text-primary-400"
-                        : "bg-gray-50 dark:bg-dark-700 border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-primary-400/40"
-                        }`}
-                    >
-                      {b}
-                    </button>
-                  ))}
+                <div>
+                  <label className="block text-xs font-mono text-gray-400 uppercase mb-1.5">
+                    Message / Project Scope
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    placeholder="Tell me about your app idea, role requirements, or question..."
+                    className="w-full px-4 py-3 rounded-xl bg-[#181926] border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors resize-none"
+                  />
                 </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="w-full py-3.5 btn-gradient flex items-center justify-center gap-2 text-sm font-semibold cursor-pointer disabled:opacity-50"
+                >
+                  <MdSend size={16} />
+                  <span>{status === "loading" ? "Sending..." : "Send Message"}</span>
+                </button>
               </div>
-
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={status === "sending" || status === "success"}
-                className="w-full py-4 gradient-bg text-white rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg shadow-primary-500/25 disabled:opacity-70"
-                onClick={() => status === "error" && setStatus(null)}
-              >
-                {status === "sending" ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Sending...
-                  </>
-                ) : status === "success" ? (
-                  <>
-                    <MdCheckCircle size={18} />
-                    Message Sent!
-                  </>
-                ) : (
-                  <>
-                    <MdSend size={18} />
-                    Send Message
-                  </>
-                )}
-              </motion.button>
-
-              {status === "success" && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center text-sm text-neon font-medium"
-                >
-                  ✓ Thanks! I'll get back to you within 24 hours.
-                </motion.p>
-              )}
-              {status === "error" && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center text-sm text-red-400 font-medium flex items-center justify-center gap-1"
-                >
-                  <MdError size={15} /> Failed to send. Please try again or email directly.
-                </motion.p>
-              )}
             </form>
           </motion.div>
         </div>

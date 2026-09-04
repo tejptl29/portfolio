@@ -1,26 +1,20 @@
-import { motion } from "framer-motion";
-
 export default function SectionHeader({ tag, title, highlight, subtitle }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="text-center space-y-4 mb-16"
-    >
-      <span className="inline-block px-4 py-1.5 rounded-full glass border border-primary-500/30 font-mono text-xs text-primary-400 tracking-widest uppercase">
-        {tag}
-      </span>
-      <h2 className="font-heading text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white">
+    <div className="text-left mb-5 sm:mb-7 space-y-1.5">
+      {tag && (
+        <span className="inline-block px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-mono font-semibold uppercase tracking-wider text-sky-400">
+          {tag}
+        </span>
+      )}
+      <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight">
         {title}{" "}
         {highlight && <span className="gradient-text">{highlight}</span>}
       </h2>
       {subtitle && (
-        <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+        <p className="text-sm sm:text-base text-gray-300 max-w-2xl leading-relaxed pt-0.5">
           {subtitle}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 }

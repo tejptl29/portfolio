@@ -1,23 +1,7 @@
 import { motion } from "framer-motion";
-import { SiFlutter, SiDart, SiFirebase } from "react-icons/si";
-import { MdArrowForward, MdCode, MdPhone } from "react-icons/md";
+import { MdArrowForward, MdEmail, MdKeyboardArrowDown } from "react-icons/md";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-
-const floatingTech = [
-  { icon: SiFlutter, color: "#54C5F8", label: "Flutter", pos: "top-10 right-16", delay: 0 },
-  { icon: SiDart, color: "#00B4AB", label: "Dart", pos: "top-1/3 right-4", delay: 0.5 },
-  { icon: SiFirebase, color: "#FFCA28", label: "Firebase", pos: "bottom-1/3 right-10", delay: 1 },
-];
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
+import { stats } from "../data";
 
 export default function Hero() {
   const scrollTo = (href) => {
@@ -25,188 +9,157 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="min-h-screen relative flex items-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 mesh-bg" />
-      <div className="absolute inset-0 dark:bg-dark-900/60" />
+    <section id="home" className="relative pt-24 pb-8 sm:pt-28 sm:pb-12 overflow-hidden text-left">
+      {/* Subtle modern ambient background glow */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-sky-500/[0.07] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-indigo-500/[0.06] rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(59,130,246,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.8) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl" />
-
-      <div className="container-max w-full px-4 sm:px-6 lg:px-8 relative z-10 pt-24 pb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
+      <div className="container-max relative z-10">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Column (7 cols): Strong, clear, outcome-focused with entrance animation */}
           <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="space-y-6"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="lg:col-span-7 space-y-6"
           >
-            {/* Badge */}
-            <motion.div variants={fadeUp}>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary-500/30 text-sm font-mono text-primary-400">
-                <span className="w-2 h-2 bg-neon rounded-full animate-pulse" />
-                Available for Freelance Projects
+            {/* Status Pill */}
+            <div>
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Available for Opportunities · Surat, India
               </span>
-            </motion.div>
-
-            {/* Name + Title */}
-            <motion.div variants={fadeUp} className="space-y-2">
-              <p className="font-mono text-primary-400 text-sm tracking-widest uppercase">
-                Hello, I'm
-              </p>
-              <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-                <span className="text-gray-900 dark:text-white">Tejash</span>
-                <br />
-                <span className="gradient-text">Patel</span>
-              </h1>
-              <div className="flex items-center gap-3">
-                <div className="h-px w-8 bg-primary-500" />
-                <p className="font-heading text-xl text-gray-600 dark:text-gray-300 font-medium tracking-wide">
-                  Flutter Developer
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Description */}
-            <motion.p
-              variants={fadeUp}
-              className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-xl"
-            >
-              Mobile Application Developer focused on creating{" "}
-              <span className="text-primary-500 font-semibold">reliable, user-friendly</span>{" "}
-              Flutter apps for real-world business use — customer apps,
-              POS systems, and food ordering platforms with{" "}
-              <span className="text-accent-500 font-semibold">REST API & offline support</span>.
-            </motion.p>
-
-            {/* Stats */}
-            {/* <motion.div variants={fadeUp} className="flex gap-8">
-              {[
-                { num: "5+", label: "Years Exp." },
-                { num: "30+", label: "Apps Built" },
-                { num: "20+", label: "Happy Clients" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <p className="font-heading text-3xl font-bold gradient-text">{s.num}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
-                </div>
-              ))}
-            </motion.div> */}
-
-            {/* CTAs */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollTo("#contact")}
-                className="flex items-center gap-2 px-7 py-3.5 gradient-bg text-white rounded-2xl font-semibold shadow-xl shadow-primary-500/25 text-sm"
-              >
-                <MdPhone size={18} />
-                Hire Me
-                <MdArrowForward size={16} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollTo("#projects")}
-                className="flex items-center gap-2 px-7 py-3.5 glass border border-primary-500/30 text-gray-700 dark:text-white rounded-2xl font-semibold text-sm hover:border-primary-500/60 transition-all"
-              >
-                <MdCode size={18} />
-                View Projects
-              </motion.button>
-            </motion.div>
-
-            {/* Social */}
-            <motion.div variants={fadeUp} className="flex items-center gap-4">
-              <span className="text-sm text-gray-500 dark:text-gray-400">Follow me:</span>
-              {[
-                { Icon: FaGithub, href: "https://github.com/tejptl29", label: "GitHub" },
-                { Icon: FaLinkedin, href: "https://linkedin.com/in/tejash-patel", label: "LinkedIn" },
-              ].map(({ Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.2, y: -3 }}
-                  className="p-2.5 glass rounded-xl text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
-                >
-                  <Icon size={18} />
-                </motion.a>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          {/* Right: Avatar */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="relative flex justify-center items-center"
-          >
-            {/* Glow ring */}
-            <div className="absolute w-80 h-80 rounded-full bg-gradient-to-r from-primary-500/20 via-accent-500/20 to-neon/20 blur-2xl animate-pulse-slow" />
-
-            {/* Hexagon avatar */}
-            <div className="relative w-72 h-72 sm:w-80 sm:h-80">
-              <div className="absolute inset-0 rounded-[40%_60%_70%_30%/40%_50%_60%_50%] bg-gradient-to-br from-primary-500 via-accent-500 to-neon animate-float p-1">
-                <div className="w-full h-full rounded-[40%_60%_70%_30%/40%_50%_60%_50%] bg-dark-700 flex items-center justify-center overflow-hidden">
-                  {/* Profile placeholder */}
-                  <div className="w-full h-full bg-gradient-to-br from-dark-600 to-dark-800 flex flex-col items-center justify-center gap-3">
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary-500/30 to-accent-500/30 border-2 border-primary-500/40 flex items-center justify-center">
-                      <span className="font-heading text-4xl font-bold gradient-text">TP</span>
-                    </div>
-                    <p className="font-mono text-xs text-primary-400 tracking-widest">FLUTTER DEV</p>
-                  </div>
-                </div>
-              </div>
             </div>
 
-            {/* Floating tech badges */}
-            {floatingTech.map(({ icon: Icon, color, label, pos, delay }) => (
-              <motion.div
-                key={label}
-                className={`absolute ${pos} glass rounded-2xl px-3 py-2 flex items-center gap-2`}
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay, ease: "easeInOut" }}
+            {/* Headline */}
+            <div className="space-y-2">
+              <p className="font-mono text-xs font-semibold uppercase tracking-widest text-sky-400">
+                Tejash Patel · Flutter Developer
+              </p>
+              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.14] text-white tracking-tight">
+                I Build Flutter Apps That Turn Ideas Into{" "}
+                <span className="gradient-text">Real Products.</span>
+              </h1>
+            </div>
+
+            {/* Subtitle */}
+            <div className="space-y-2 max-w-xl">
+              <p className="text-white text-lg sm:text-xl font-medium leading-snug">
+                Flutter Developer building production-ready mobile applications for real-world businesses.
+              </p>
+              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+                Software Developer at <span className="text-white font-semibold">Tenacious Techies</span> with 1+ year of production experience building cross-platform Android & iOS apps using Flutter, Firebase, REST APIs, and AI-powered workflows.
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3.5 pt-1">
+              <button
+                onClick={() => scrollTo("#projects")}
+                className="flex items-center gap-2 px-6 py-3 btn-gradient cursor-pointer text-sm"
               >
-                <Icon size={16} color={color} />
-                <span className="text-xs font-mono text-gray-700 dark:text-gray-300">{label}</span>
-              </motion.div>
-            ))}
+                <span>View My Work</span>
+                <MdArrowForward size={16} />
+              </button>
+
+              <button
+                onClick={() => scrollTo("#contact")}
+                className="flex items-center gap-2 px-5 py-3 rounded-xl bg-[#14151f] text-gray-200 hover:text-white border border-white/10 hover:border-sky-500/40 font-medium text-sm transition-all cursor-pointer"
+              >
+                <span>Contact Me</span>
+              </button>
+
+              <div className="flex items-center gap-2.5 pl-2 text-gray-400">
+                <a
+                  href="https://github.com/tejptl29"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-[#14151f] border border-white/10 hover:text-white hover:border-sky-500/40 transition-colors"
+                  title="GitHub"
+                >
+                  <FaGithub size={16} />
+                </a>
+                <a
+                  href="https://linkedin.com/in/tejash-patel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-[#14151f] border border-white/10 hover:text-white hover:border-sky-500/40 transition-colors"
+                  title="LinkedIn"
+                >
+                  <FaLinkedin size={16} className="text-sky-400" />
+                </a>
+                <a
+                  href="mailto:tejashpatel2903@gmail.com"
+                  className="p-2 rounded-lg bg-[#14151f] border border-white/10 hover:text-white hover:border-sky-500/40 transition-colors"
+                  title="Email"
+                >
+                  <MdEmail size={16} className="text-amber-400" />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column (5 cols): Clean Professional Developer Portrait with Entrance Animation */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+            className="lg:col-span-5 flex justify-center"
+          >
+            <div className="relative w-full max-w-[320px] sm:max-w-[350px]">
+              {/* Subtle ambient glow behind portrait */}
+              <div className="absolute -inset-1.5 bg-gradient-to-tr from-sky-500/20 via-blue-500/10 to-indigo-500/20 rounded-3xl blur-2xl opacity-75 pointer-events-none" />
+
+              {/* Pure Clean Photo Card */}
+              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-[#12131f] shadow-2xl shadow-black/80 group">
+                <img
+                  src="/profile.jpg"
+                  alt="Tejash Patel - Flutter Developer"
+                  className="w-full h-[400px] sm:h-[440px] object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
+                />
+              </div>
+            </div>
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Minimal Stats Row with Proper Breathing Room */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="flex justify-center mt-16"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mt-10 pt-6 border-t border-white/10"
         >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2 cursor-pointer"
-            onClick={() => scrollTo("#about")}
-          >
-            <span className="text-xs font-mono text-gray-400 tracking-widest uppercase">Scroll</span>
-            <div className="w-5 h-8 border border-gray-400/40 rounded-full flex justify-center pt-1.5">
-              <div className="w-1 h-2 bg-primary-400 rounded-full" />
-            </div>
-          </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="font-heading text-3xl font-bold gradient-text">{s.num}</p>
+                <p className="text-sm font-semibold text-white mt-0.5">{s.label}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{s.sub}</p>
+              </div>
+            ))}
+          </div>
         </motion.div>
+
+        {/* Animated Scroll Down Indicator */}
+        <div className="flex justify-center pt-8">
+          <button
+            onClick={() => scrollTo("#about")}
+            className="group inline-flex flex-col items-center gap-2 text-gray-400 hover:text-sky-400 transition-colors cursor-pointer"
+            aria-label="Scroll to About section"
+          >
+            <span className="text-[10px] font-mono uppercase tracking-widest text-gray-400 group-hover:text-sky-300 transition-colors">
+              Scroll Down
+            </span>
+            <div className="w-5 h-8 rounded-full border border-white/20 group-hover:border-sky-400/50 flex items-start justify-center p-1 transition-colors">
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                className="w-1 h-2 rounded-full bg-sky-400"
+              />
+            </div>
+          </button>
+        </div>
       </div>
     </section>
   );

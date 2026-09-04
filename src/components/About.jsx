@@ -1,129 +1,186 @@
 import { motion } from "framer-motion";
 import SectionHeader from "./SectionHeader";
-import { techBadges } from "../data";
-import { MdCheckCircle } from "react-icons/md";
+import {
+  MdPhoneIphone, MdStorage, MdApi,
+  MdLocationOn, MdWork, MdSchool, MdTranslate,
+} from "react-icons/md";
 
-const highlights = [
-  "Flutter Developer at Tenacious Techies (Current)",
-  "Built production apps: Customer App & FoodChow POS",
-  "Experienced with Hive offline storage & REST APIs",
-  "Available for freelance projects",
-];
-
-const badgeColors = [
-  "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  "bg-teal-500/10 text-teal-400 border-teal-500/20",
-  "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
-  "bg-orange-500/10 text-orange-400 border-orange-500/20",
-  "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  "bg-green-500/10 text-green-400 border-green-500/20",
-  "bg-pink-500/10 text-pink-400 border-pink-500/20",
-  "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-  "bg-red-500/10 text-red-400 border-red-500/20",
-  "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+const corePillars = [
+  {
+    icon: MdPhoneIphone,
+    title: "Cross-Platform Flutter & Dart",
+    desc: "Developing fast, responsive applications for Android and iOS with clean architecture and Provider state management.",
+    color: "#38bdf8",
+  },
+  {
+    icon: MdStorage,
+    title: "Offline-First with Hive DB",
+    desc: "Structuring local persistence layers that guarantee zero order loss during unstable Wi-Fi or offline usage.",
+    color: "#34d399",
+  },
+  {
+    icon: MdApi,
+    title: "REST APIs & Cloud Services",
+    desc: "Integrating backend RESTful APIs, token refresh lifecycle, and targeted Firebase Cloud Messaging (FCM) push alerts.",
+    color: "#fb923c",
+  },
 ];
 
 export default function About() {
   return (
-    <section id="about" className="section-padding relative overflow-hidden">
-      <div className="absolute right-0 top-1/4 w-72 h-72 bg-accent-500/5 rounded-full blur-3xl" />
+    <section id="about" className="section-padding text-left border-t border-white/[0.06]">
       <div className="container-max">
         <SectionHeader
           tag="About Me"
-          title="Building Flutter Apps"
-          highlight="For Real Business"
-          subtitle="Mobile Application Developer focused on creating reliable, user-friendly Flutter apps for real-world business use."
+          title="Building Flutter Apps For"
+          highlight="Real-World Business"
+          subtitle="Turning complex workflows into responsive, high-performance mobile user experiences."
         />
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left */}
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* Left Narrative Column (7 cols) with Scroll Animation */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-7 space-y-6"
           >
-            <div className="glass-card p-8 space-y-5">
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Hi! I'm <span className="text-primary-500 font-semibold">Tejash Patel</span>, a Flutter Developer based in Surat, India. I'm currently working at <span className="text-accent-500 font-semibold">Tenacious Techies</span>, building production mobile applications.
+            <div className="space-y-4 text-base sm:text-lg text-gray-300 leading-relaxed">
+              <p>
+                Hi! I'm <strong className="text-white font-semibold">Tejash Patel</strong>, a Flutter Developer based in Surat, India. I specialize in building <span className="text-white">production mobile applications</span> that solve real commercial problems — including high-throughput restaurant POS systems, cloud kitchen food ordering apps, and offline-first mobile tools.
               </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                I've worked on customer apps, POS systems, and food ordering platforms, gaining hands-on experience with Flutter, Dart, Hive for offline storage, and REST API integration using Provider for state management.
-              </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                I hold a BCA degree and am currently pursuing MSC-CA. I have a strong drive to improve performance, UI quality, and code structure in everything I build.
+              <p className="text-base text-gray-400 leading-relaxed">
+                Currently working at <span className="text-white font-semibold">Tenacious Techies</span>, I focus on clean architecture, predictable state with Provider, and offline resilience using Hive database. I care deeply about writing maintainable code that delivers sub-second page transitions and zero UI jank.
               </p>
             </div>
 
-            {/* Highlights */}
-            <div className="space-y-3">
-              {highlights.map((item, i) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-3"
-                >
-                  <MdCheckCircle className="text-neon flex-shrink-0" size={20} />
-                  <span className="text-gray-700 dark:text-gray-300 text-sm">{item}</span>
-                </motion.div>
-              ))}
+            {/* 3 Core Focus Rows */}
+            <div className="space-y-3 pt-2">
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-sky-400">
+                Core Engineering Pillars
+              </h4>
+              <div className="space-y-2.5">
+                {corePillars.map((pillar) => {
+                  const Icon = pillar.icon;
+                  return (
+                    <div
+                      key={pillar.title}
+                      className="p-4 rounded-2xl bg-[#11121a] border border-white/10 hover:border-sky-500/30 transition-colors flex items-start gap-4"
+                    >
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
+                        style={{ backgroundColor: `${pillar.color}15`, border: `1px solid ${pillar.color}30` }}
+                      >
+                        <Icon size={20} style={{ color: pillar.color }} />
+                      </div>
+                      <div>
+                        <h5 className="text-sm sm:text-base font-semibold text-white">
+                          {pillar.title}
+                        </h5>
+                        <p className="text-xs sm:text-sm text-gray-400 mt-1 leading-relaxed">
+                          {pillar.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
 
-          {/* Right */}
+          {/* Right Snapshot Column (5 cols) with Scroll Animation */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-5"
           >
-            {/* Quick info */}
-            <div className="glass-card p-6 space-y-0 divide-y divide-gray-200/50 dark:divide-white/5">
-              <h3 className="font-heading font-semibold text-gray-800 dark:text-gray-200 mb-4 text-sm uppercase tracking-widest">
-                Quick Info
-              </h3>
-              {[
-                { label: "Location", value: "Olpad, Surat, Gujarat" },
-                { label: "Company", value: "Tenacious Techies" },
-                { label: "Role", value: "Software Developer (Flutter)" },
-                { label: "Degree", value: "BCA · MSC-CA (CGPA 9.28)" },
-                { label: "Languages", value: "English · Hindi · Gujarati" },
-              ].map(({ label, value }) => (
-                <div key={label} className="flex gap-4 py-3">
-                  <span className="font-mono text-xs text-gray-400 dark:text-gray-500 w-24 flex-shrink-0 pt-0.5 uppercase tracking-wider">
-                    {label}
-                  </span>
-                  <span className="text-sm text-gray-700 dark:text-gray-300">{value}</span>
+            <div className="modern-card p-6 sm:p-7 space-y-5">
+              {/* Profile Card Header with Photo */}
+              <div className="flex items-center gap-3.5 pb-4 border-b border-white/10">
+                <div className="relative flex-shrink-0">
+                  <img
+                    src="/profile.jpg"
+                    alt="Tejash Patel"
+                    className="w-14 h-14 rounded-2xl object-cover object-top border-2 border-sky-400/70 shadow-md shadow-sky-500/20"
+                  />
+                  <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0b0c14]" />
                 </div>
-              ))}
-            </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-heading font-bold text-lg text-white">
+                      Tejash Patel
+                    </h4>
+                    <span className="px-2 py-0.5 rounded-full text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+                      Active
+                    </span>
+                  </div>
+                  <p className="text-xs text-sky-400 font-mono mt-0.5">
+                    Flutter Developer · Tenacious Techies
+                  </p>
+                </div>
+              </div>
 
-            {/* Tech badges */}
-            <div className="glass-card p-6">
-              <h3 className="font-heading font-semibold text-gray-800 dark:text-gray-200 mb-4 text-sm uppercase tracking-widest">
-                Technologies
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {techBadges.map((tech, i) => (
-                  <motion.span
-                    key={tech}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.04 }}
-                    whileHover={{ scale: 1.1 }}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono border ${
-                      badgeColors[i % badgeColors.length]
-                    }`}
-                  >
-                    {tech}
-                  </motion.span>
-                ))}
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: MdWork,
+                    label: "Current Role",
+                    val: "Flutter Developer @ Tenacious Techies",
+                  },
+                  {
+                    icon: MdPhoneIphone,
+                    label: "Core Stack",
+                    val: "Flutter, Dart, Hive DB, Provider, REST APIs",
+                  },
+                  {
+                    icon: MdSchool,
+                    label: "Education",
+                    val: "MSC-CA (SDJ College · 9.28 CGPA) & BCA",
+                  },
+                  {
+                    icon: MdLocationOn,
+                    label: "Location",
+                    val: "Surat, Gujarat, India (Open to Remote)",
+                  },
+                  {
+                    icon: MdTranslate,
+                    label: "Languages",
+                    val: "English · Hindi · Gujarati",
+                  },
+                ].map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={idx} className="flex items-start gap-3.5">
+                      <div className="w-8 h-8 rounded-lg bg-[#181924] border border-white/10 flex items-center justify-center flex-shrink-0 text-sky-400 mt-0.5">
+                        <Icon size={17} />
+                      </div>
+                      <div>
+                        <p className="text-xs font-mono text-gray-400 uppercase tracking-wider">
+                          {item.label}
+                        </p>
+                        <p className="text-sm sm:text-base font-semibold text-white mt-0.5">
+                          {item.val}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-gray-400 font-mono">Availability:</p>
+                  <p className="text-sm font-semibold text-white">Open to Opportunities</p>
+                </div>
+                <a
+                  href="#contact"
+                  className="px-4 py-2 rounded-xl btn-gradient text-white text-xs font-semibold"
+                >
+                  Contact Me
+                </a>
               </div>
             </div>
           </motion.div>
